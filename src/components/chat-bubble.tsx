@@ -1,4 +1,8 @@
-export function ChatBubble({ open, onToggle }) {
+export type Props = {
+  open: boolean
+  onToggle: () => void
+}
+export function ChatBubble({ open, onToggle }: Props) {
   return (
     <button
       type="button"

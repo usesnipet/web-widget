@@ -1,11 +1,10 @@
-
-
 import type { Config } from '../config'
+
 type Props = {
   config: Config
   onClose: () => void
 }
-export function ChatWindow({ config, onClose }: Props) {
+export function ChatWindow({ onClose }: Props) {
 
   return (
     <div className="snipet-window" role="dialog" aria-label="Chat">

@@ -15,10 +15,10 @@ const CURRENT_SCRIPT = document.currentScript
 
 export const getConfig = (): Config => {
   const attrs: Partial<Config> = CURRENT_SCRIPT ? {
-    clientCode: CURRENT_SCRIPT.getAttribute("client-code"),
-    position: CURRENT_SCRIPT.getAttribute("position") as Config["position"],
-    color: CURRENT_SCRIPT.getAttribute("color") as Config["color"],
-    apiUrl: CURRENT_SCRIPT.getAttribute("api-url"),
+    clientCode: CURRENT_SCRIPT.getAttribute("client-code") ?? undefined,
+    position: (CURRENT_SCRIPT.getAttribute("position") ?? undefined) as Config["position"] | undefined,
+    color: (CURRENT_SCRIPT.getAttribute("color") ?? undefined) as Config["color"] | undefined,
+    apiUrl: CURRENT_SCRIPT.getAttribute("api-url") ?? undefined,
   }: {}
 
   const config = {
