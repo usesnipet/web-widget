@@ -1,9 +1,10 @@
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [tailwindcss(), react()],
   build: {
     lib: {
       entry: 'src/main.jsx',
@@ -12,4 +13,7 @@ export default defineConfig({
       fileName: () => 'snipet-widget.js',
     },
   },
+  server: {
+    port: 3001,
+  }
 })

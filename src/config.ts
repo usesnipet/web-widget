@@ -1,13 +1,13 @@
 export type Config = {
   clientCode: string;
   position: "bottom-left" | "bottom-right";
-  color: "light" | "dark";
+  color: "light" | "dark" | "auto";
   apiUrl: string;
 }
 
 export const DEFAULT_CONFIG: Partial<Config> = {
   position: "bottom-right",
-  color: "light",
+  color: "auto",
   apiUrl: "https://api.example.com",
 }
 
