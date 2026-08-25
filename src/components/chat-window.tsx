@@ -8,13 +8,13 @@ export function ChatWindow({ onClose }: Props) {
 
   return (
     <div
-      className="flex h-[480px] w-[340px] flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white text-neutral-900 shadow-2xl dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100"
+      className="snipet-window"
       role="dialog"
       aria-label="Chat"
     >
-      <header className="flex items-center justify-between bg-neutral-900 px-4 py-3.5 font-medium text-white dark:bg-neutral-950">
+      <header className="snipet-window__header">
         <span>{'Assistente'}</span>
-        <button type="button" className="cursor-pointer border-none bg-transparent text-xl leading-none text-white" onClick={onClose} aria-label="Close">
+        <button type="button" className="snipet-window__close" onClick={onClose} aria-label="Close">
           ×
         </button>
       </header>

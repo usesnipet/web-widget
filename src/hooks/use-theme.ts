@@ -7,7 +7,9 @@ type ResolvedTheme = "light" | "dark";
 const getSystemTheme = (): ResolvedTheme =>
   window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
-export function useTheme(color: Config["color"]): ResolvedTheme {
+export function useTheme(configColor: Config["color"]): ResolvedTheme {
+  const color = configColor;
+
   const [systemTheme, setSystemTheme] = useState<ResolvedTheme>(getSystemTheme);
 
   useEffect(() => {

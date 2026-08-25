@@ -1,5 +1,5 @@
 export type Config = {
-  clientCode: string;
+  appCode: string;
   position: "bottom-left" | "bottom-right";
   color: "light" | "dark" | "auto";
   apiUrl: string;
@@ -15,7 +15,7 @@ const CURRENT_SCRIPT = document.currentScript
 
 export const getConfig = (): Config => {
   const attrs: Partial<Config> = CURRENT_SCRIPT ? {
-    clientCode: CURRENT_SCRIPT.getAttribute("client-code") ?? undefined,
+    appCode: CURRENT_SCRIPT.getAttribute("client-code") ?? undefined,
     position: (CURRENT_SCRIPT.getAttribute("position") ?? undefined) as Config["position"] | undefined,
     color: (CURRENT_SCRIPT.getAttribute("color") ?? undefined) as Config["color"] | undefined,
     apiUrl: CURRENT_SCRIPT.getAttribute("api-url") ?? undefined,
@@ -26,7 +26,7 @@ export const getConfig = (): Config => {
     ...attrs,
     ...((window as unknown as { SnipetSettings: Config }).SnipetSettings || {}),
   } as Config
-  if (!config.clientCode) {
+  if (!config.appCode) {
     throw new Error("client-code is required")
   }
   if (!config.apiUrl) {

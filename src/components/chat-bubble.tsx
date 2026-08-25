@@ -6,7 +6,7 @@ export function ChatBubble({ open, onToggle }: Props) {
   return (
     <button
       type="button"
-      className="flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-none bg-blue-600 text-white shadow-lg hover:brightness-110 dark:bg-blue-500"
+      className="snipet-bubble"
       onClick={onToggle}
       aria-label={open ? 'Close chat' : 'Open chat'}
     >
