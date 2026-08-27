@@ -1,8 +1,8 @@
 import { createRoot } from "react-dom/client";
 
-import { Chat } from "./chat";
 import { getConfig } from "./config";
 import cssText from "./index.css?inline";
+import { App } from "./app";
 
 function mount() {
   const config = getConfig()
@@ -20,7 +20,7 @@ function mount() {
   const appRoot = document.createElement('div')
   shadowRoot.appendChild(appRoot)
 
-  createRoot(appRoot).render(<Chat config={config} />)
+  createRoot(appRoot).render(<App config={config} />)
 }
 
 if (document.readyState === "loading") {

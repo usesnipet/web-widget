@@ -1,3 +1,4 @@
+import { getConfig } from "@/config";
 import { useAuthStore } from "@/features/auth/store";
 import { z, ZodType } from "zod";
 
@@ -35,6 +36,14 @@ export type ApiRequestOptions<
   }
 };
 
+export function resolveUrl(url: string): string {
+  if (/^[a-z][a-z\d+.-]*:\/\//i.test(url)) return url;
+
+  const base = getConfig().apiUrl.replace(/\/+$/, "");
+  const path = url.startsWith("/") ? url : `/${url}`;
+  return `${base}${path}`;
+}
+
 export function applyPathParams(url: string, params: PathParamsRecord): string {
   return Object.entries(params).reduce(
     (result, [key, value]) =>
@@ -70,7 +79,7 @@ async function refreshAccessToken(): Promise<string | null> {
   if (!refreshToken) return null;
 
   try {
-    const response = await fetch("/api/auth/refresh", {
+    const response = await fetch(resolveUrl("/auth/refresh"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ refresh_token: refreshToken }),
@@ -140,7 +149,7 @@ async function httpxInternal<TResponse = unknown, TBody = unknown, TSearchParams
     ? applySearchParams(pathUrl, searchParams as SearchParamsRecord)
     : pathUrl;
 
-  const response = await fetch(requestUrl, {
+  const response = await fetch(resolveUrl(requestUrl), {
     method,
     body: body !== undefined ? JSON.stringify(body) : undefined,
     headers: {

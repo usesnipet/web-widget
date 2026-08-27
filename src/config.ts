@@ -13,9 +13,13 @@ export const DEFAULT_CONFIG: Partial<Config> = {
 
 const CURRENT_SCRIPT = document.currentScript
 
+let cachedConfig: Config | null = null
+
 export const getConfig = (): Config => {
+  if (cachedConfig) return cachedConfig
+
   const attrs: Partial<Config> = CURRENT_SCRIPT ? {
-    appCode: CURRENT_SCRIPT.getAttribute("client-code") ?? undefined,
+    appCode: CURRENT_SCRIPT.getAttribute("app-code") ?? undefined,
     position: (CURRENT_SCRIPT.getAttribute("position") ?? undefined) as Config["position"] | undefined,
     color: (CURRENT_SCRIPT.getAttribute("color") ?? undefined) as Config["color"] | undefined,
     apiUrl: CURRENT_SCRIPT.getAttribute("api-url") ?? undefined,
@@ -27,7 +31,7 @@ export const getConfig = (): Config => {
     ...((window as unknown as { SnipetSettings: Config }).SnipetSettings || {}),
   } as Config
   if (!config.appCode) {
-    throw new Error("client-code is required")
+    throw new Error("app-code is required")
   }
   if (!config.apiUrl) {
     throw new Error("api-url is required")
@@ -38,5 +42,7 @@ export const getConfig = (): Config => {
   if (!config.color) {
     throw new Error("color is required")
   }
+
+  cachedConfig = config
   return config
 }

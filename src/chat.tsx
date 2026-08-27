@@ -5,13 +5,15 @@ import { ChatWindow } from "./components/chat-window";
 
 import type { Config } from "./config"
 import { useTheme } from "./hooks/use-theme";
+import { useFindPublicApp } from "./features/app/hooks";
 
 type Props = {
   config: Config
 }
 export const Chat = ({ config }: Props) => {
-  const [open, setOpen] = useState(false)
-  const theme = useTheme(config.color)
+  const [open, setOpen] = useState(false);
+  const theme = useTheme(config.color);
+  const { data, isLoading, error } = useFindPublicApp(config.appCode);
 
   const positionClass = config.position === "bottom-left"
     ? "snipet-position-left"
