@@ -1,4 +1,4 @@
-import { useFindPublicApp } from '@/features/app/hooks';
+import { SessionSelect } from '@/features/session/components/session-select';
 import type { Config } from '../config'
 
 type Props = {
@@ -6,8 +6,6 @@ type Props = {
   onClose: () => void
 }
 export function ChatWindow({ onClose }: Props) {
-  const { data } = useFindPublicApp();
-
   return (
     <div
       className="snipet-window"
@@ -15,7 +13,7 @@ export function ChatWindow({ onClose }: Props) {
       aria-label="Chat"
     >
       <header className="snipet-window__header">
-        <span>{data?.name}</span>
+        <SessionSelect />
         <button type="button" className="snipet-window__close" onClick={onClose} aria-label="Close">
           ×
         </button>
