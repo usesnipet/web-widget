@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 import { authenticateResponseSchema } from "./schemas";
 
-import type { AuthenticateResponse } from "./schemas";
+import type { AuthenticateResponse, CurrentUser } from "./schemas";
 
 const KEYS = {
   accessToken: "snipet@access-token",
@@ -27,7 +27,10 @@ type AuthStore = {
   accessTokenExpiresAt: Date | null;
   refreshToken: string | null;
   refreshTokenExpiresAt: Date | null;
-  setTokens: (tokens: AuthenticateResponse) => void;
+  /** Current user — kept in memory only, always (re)loaded from `GET /user/me`. */
+  user: CurrentUser | null;
+  setTokens: (response: AuthenticateResponse) => void;
+  setUser: (user: CurrentUser | null) => void;
   clear: () => void;
 };
 
@@ -36,9 +39,10 @@ export const useAuthStore = create<AuthStore>((set) => ({
   accessTokenExpiresAt: readDate(KEYS.accessTokenExpiresAt),
   refreshToken: localStorage.getItem(KEYS.refreshToken),
   refreshTokenExpiresAt: readDate(KEYS.refreshTokenExpiresAt),
+  user: null,
 
-  setTokens: (tokens) => {
-    const parsed = authenticateResponseSchema.parse(tokens);
+  setTokens: (response) => {
+    const parsed = authenticateResponseSchema.parse(response);
 
     localStorage.setItem(KEYS.accessToken, parsed.access_token);
     writeDate(KEYS.accessTokenExpiresAt, parsed.access_token_expires_at);
@@ -53,6 +57,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     });
   },
 
+  setUser: (user) => set({ user }),
+
   clear: () => {
     for (const key of Object.values(KEYS)) {
       localStorage.removeItem(key);
@@ -63,6 +69,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       accessTokenExpiresAt: null,
       refreshToken: null,
       refreshTokenExpiresAt: null,
+      user: null,
     });
   },
 }));

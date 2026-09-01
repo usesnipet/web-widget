@@ -74,25 +74,20 @@ export function applySearchParams(
   return `${url}${separator}${query}`;
 }
 
+const REFRESH_URL_SUFFIX = "/refresh";
+
 async function refreshAccessToken(): Promise<string | null> {
   const { refreshToken, setTokens, clear } = useAuthStore.getState();
   if (!refreshToken) return null;
 
   try {
-    const response = await fetch(resolveUrl("/auth/refresh"), {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refresh_token: refreshToken }),
+    // Dynamic import: `@/features/auth/service` imports this module back.
+    const { authService } = await import("@/features/auth/service");
+    const tokens = await authService.refresh(getConfig().appCode, {
+      refresh_token: refreshToken,
     });
-
-    if (!response.ok) {
-      clear();
-      return null;
-    }
-
-    const json = await response.json();
-    setTokens(json);
-    return json.access_token as string;
+    setTokens(tokens);
+    return tokens.access_token;
   } catch (error) {
     logger.error(error);
     clear();
@@ -162,7 +157,7 @@ async function httpxInternal<TResponse = unknown, TBody = unknown, TSearchParams
     response.status === 401 &&
     accessToken &&
     !isRetry &&
-    !pathUrl.endsWith("/auth/refresh")
+    !pathUrl.endsWith(REFRESH_URL_SUFFIX)
   ) {
     const newAccessToken = await refreshAccessTokenOnce();
     if (newAccessToken) {

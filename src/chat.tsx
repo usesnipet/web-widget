@@ -5,12 +5,14 @@ import { ChatWindow } from "./components/chat-window";
 
 import { useTheme } from "./hooks/use-theme";
 import { useFindPublicApp } from "./features/app/hooks";
+import { useAuthFlow } from "./features/auth/hooks";
 import { useConfig } from "./context/config";
 
 export const Chat = () => {
   const [open, setOpen] = useState(false);
   const config = useConfig();
   const { isLoading, error } = useFindPublicApp();
+  const { isLoading: authLoading, error: authError } = useAuthFlow();
   const theme = useTheme(config.color);
 
   const positionClass = config.position === "bottom-left"
@@ -26,8 +28,9 @@ export const Chat = () => {
   }
 
   useEffect(() => { if (error) console.error(error) }, [error]);
+  useEffect(() => { if (authError) console.error(authError) }, [authError]);
 
-  if (isLoading || error) return null;
+  if (isLoading || authLoading || error) return null;
 
   return (
     <div className={`snipet-root ${theme === "dark" ? "dark" : ""} ${positionClass}`}>
