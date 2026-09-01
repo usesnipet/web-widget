@@ -12,7 +12,6 @@ export type SessionMetadata = z.infer<typeof sessionMetadataSchema>;
 
 export interface Session {
   id: string;
-  tenant_id: string;
   app_id: string;
   agent_id: string;
   metadata: SessionMetadata;
@@ -25,7 +24,6 @@ export interface Session {
 export const sessionBaseSchema = z
   .object({
     id: z.uuid(),
-    tenant_id: z.uuid(),
     app_id: z.uuid(),
     agent_id: z.uuid(),
     metadata: sessionMetadataSchema,
@@ -71,7 +69,6 @@ export const messageSchema = z
 export type Message = z.infer<typeof messageSchema>;
 
 export interface ExecutionMessage extends Message {
-  tenant_id: string;
   execution_id: string;
   execution?: Execution | null;
 }
@@ -79,7 +76,6 @@ export interface ExecutionMessage extends Message {
 export const executionMessageSchema: z.ZodType<ExecutionMessage> = z.lazy(() =>
   messageSchema
     .extend({
-      tenant_id: z.uuid(),
       execution_id: z.uuid(),
       execution: executionSchema.nullable().optional(),
     })

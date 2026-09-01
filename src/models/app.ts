@@ -35,7 +35,6 @@ export type AppStatus = z.infer<typeof appStatusSchema>;
 
 export interface App {
   id: string;
-  tenant_id: string;
   code: string;
   name: string;
   description: string;
@@ -51,7 +50,6 @@ export interface App {
 export const appBaseSchema = z
   .object({
     id: z.string(),
-    tenant_id: z.string(),
     code: z.string(),
     name: z.string().min(1).max(255),
     description: z.string().max(1000),

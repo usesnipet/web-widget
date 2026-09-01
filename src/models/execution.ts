@@ -14,7 +14,6 @@ export type ExecutionStatus = z.infer<typeof executionStatusSchema>;
 
 export interface Execution {
   id: string;
-  tenant_id: string;
   session_id?: string;
   agent_id: string;
   status: ExecutionStatus;
@@ -31,7 +30,6 @@ export const executionSchema: z.ZodType<Execution> = z.lazy(() =>
   z
     .object({
       id: z.uuid(),
-      tenant_id: z.uuid(),
       session_id: z.uuid().optional(),
       agent_id: z.uuid(),
       status: executionStatusSchema,
