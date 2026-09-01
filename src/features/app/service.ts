@@ -7,7 +7,7 @@ const appsUrl = (code: string) => `/api/apps/${code}`;
 
 const findPublicApp = async (code: string, opts: ServiceGetOptions<PublicApp>): Promise<PublicApp> => {
   return http.get<PublicApp>({
-    url: appsUrl(code),
+    url: `${appsUrl(code)}/public`,
     schemas: {
       response: publicAppSchema,
     },
