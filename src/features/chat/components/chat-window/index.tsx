@@ -20,7 +20,7 @@ export function ChatWindow({ onClose }: Props) {
         </button>
       </header>
 
-      <ChatContainer messages={[]} onSend={() => {}} />
+      <ChatContainer />
     </div>
   )
 }

@@ -36,7 +36,7 @@ export const sessionQueryKey = (code: string, id: string, params: GetSessionPara
 
 export const sessionMessagesQueryKey = (
   code: string,
-  id: string,
+  id?: string,
   params: ListSessionMessagesParams = {},
 ) => [BASE_QUERY_KEY, "messages", code, id, params] as const;
 
@@ -80,7 +80,7 @@ export const useSessionMessages = (
   return useQuery({
     queryKey: sessionMessagesQueryKey(appCode, id, params),
     queryFn: () => sessionService.listMessages(appCode, id, params, opts),
-    enabled: !!appCode && !!id,
+    enabled: !!appCode && !!id && id !== "",
   });
 };
 

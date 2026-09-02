@@ -7,6 +7,7 @@ import { useTheme } from "../hooks/use-theme";
 import { useFindPublicApp } from "../features/app/hooks";
 import { useAuthFlow } from "../features/auth/hooks";
 import { useConfig } from "../context/config";
+import { SessionProvider } from "../context/session";
 
 export const Chat = () => {
   const [open, setOpen] = useState(false);
@@ -34,8 +35,10 @@ export const Chat = () => {
 
   return (
     <div className={`snipet-root ${theme === "dark" ? "dark" : ""} ${positionClass}`}>
-      {open && <ChatWindow config={config} onClose={closeChat} />}
-      <ChatBubble open={open} onToggle={toggleChat} />
+      <SessionProvider>
+        {open && <ChatWindow config={config} onClose={closeChat} />}
+        <ChatBubble open={open} onToggle={toggleChat} />
+      </SessionProvider>
     </div>
   )
 }

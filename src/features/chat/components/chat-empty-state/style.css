@@ -1,0 +1,15 @@
+.snipet-empty-state {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  padding: var(--snipet-space-lg);
+  text-align: center;
+}
+
+.snipet-empty-state__text {
+  margin: 0;
+  color: var(--snipet-color-text);
+  opacity: 0.6;
+}

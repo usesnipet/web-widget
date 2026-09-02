@@ -1,19 +1,13 @@
 import { useState } from "react";
 
-type Props = {
-  onSend: (text: string) => void;
-  disabled?: boolean;
-};
-
-/** Text field plus send button; trims input and clears itself after sending. */
-export function MessageInput({ onSend, disabled }: Props) {
+export function MessageInput() {
   const [value, setValue] = useState("");
+  const disabled = value.trim() === "";
 
   const submit = (event: React.SyntheticEvent) => {
     event.preventDefault();
     const text = value.trim();
     if (!text || disabled) return;
-    onSend(text);
     setValue("");
   };
 
@@ -25,7 +19,6 @@ export function MessageInput({ onSend, disabled }: Props) {
         placeholder="Digite uma mensagem..."
         value={value}
         onChange={(event) => setValue(event.target.value)}
-        disabled={disabled}
       />
       <button
         type="submit"
