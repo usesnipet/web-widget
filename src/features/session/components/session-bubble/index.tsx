@@ -2,13 +2,13 @@ export type Props = {
   open: boolean
   onToggle: () => void
 }
-export function ChatBubble({ open, onToggle }: Props) {
+export function SessionBubble({ open, onToggle }: Props) {
   return (
     <button
       type="button"
       className="snipet-bubble"
       onClick={onToggle}
-      aria-label={open ? 'Close chat' : 'Open chat'}
+      aria-label={open ? 'Close session' : 'Open session'}
     >
       {open ? (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { ChatBubble } from "../features/chat/components/chat-bubble";
-import { ChatWindow } from "../features/chat/components/chat-window";
+import { SessionBubble } from "../features/session/components/session-bubble";
+import { SessionWindow } from "../features/session/components/session-window";
 
 import { useTheme } from "../hooks/use-theme";
 import { useFindPublicApp } from "../features/app/hooks";
@@ -9,7 +9,7 @@ import { useAuthFlow } from "../features/auth/hooks";
 import { useConfig } from "../context/config";
 import { SessionProvider } from "../context/session";
 
-export const Chat = () => {
+export const Session = () => {
   const [open, setOpen] = useState(false);
   const config = useConfig();
   const { isLoading, error } = useFindPublicApp();
@@ -20,11 +20,11 @@ export const Chat = () => {
     ? "snipet-position-left"
     : "snipet-position-right"
 
-  const toggleChat = () => {
+  const toggleSession = () => {
     setOpen(!open)
   }
 
-  const closeChat = () => {
+  const closeSession = () => {
     setOpen(false)
   }
 
@@ -36,8 +36,8 @@ export const Chat = () => {
   return (
     <div className={`snipet-root ${theme === "dark" ? "dark" : ""} ${positionClass}`}>
       <SessionProvider>
-        {open && <ChatWindow config={config} onClose={closeChat} />}
-        <ChatBubble open={open} onToggle={toggleChat} />
+        {open && <SessionWindow config={config} onClose={closeSession} />}
+        <SessionBubble open={open} onToggle={toggleSession} />
       </SessionProvider>
     </div>
   )

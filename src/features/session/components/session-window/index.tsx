@@ -1,17 +1,17 @@
 import { SessionSelect } from '@/features/session/components/session-select';
 import type { Config } from '../../../../config'
-import { ChatContainer } from '../chat-container'
+import { SessionContainer } from '../session-container'
 
 type Props = {
   config: Config
   onClose: () => void
 }
-export function ChatWindow({ onClose }: Props) {
+export function SessionWindow({ onClose }: Props) {
   return (
     <div
       className="snipet-window"
       role="dialog"
-      aria-label="Chat"
+      aria-label="Session"
     >
       <header className="snipet-window__header">
         <SessionSelect />
@@ -20,7 +20,7 @@ export function ChatWindow({ onClose }: Props) {
         </button>
       </header>
 
-      <ChatContainer />
+      <SessionContainer />
     </div>
   )
 }

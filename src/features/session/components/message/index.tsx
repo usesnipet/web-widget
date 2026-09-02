@@ -1,10 +1,10 @@
-import type { Message as ChatMessage } from "@/models/session";
+import type { Message as SessionMessage } from "@/models/session";
 
 type Props = {
-  message: ChatMessage;
+  message: SessionMessage;
 };
 
-/** Renders a single chat message, aligned right for the user and left for everyone else. */
+/** Renders a single session message, aligned right for the user and left for everyone else. */
 export function Message({ message }: Props) {
   return (
     <div className={`snipet-message snipet-message--${message.role}`}>
