@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { getConfig } from "./config";
 import { App } from "./app";
 
+import variablesCss from "./index.css?inline";
 import chatCss from "./chat/style.css?inline";
 import chatBubbleCss from "./features/chat/components/chat-bubble/style.css?inline";
 import chatWindowCss from "./features/chat/components/chat-window/style.css?inline";
@@ -13,6 +14,7 @@ import messageCss from "./features/chat/components/message/style.css?inline";
 import messageInputCss from "./features/chat/components/message-input/style.css?inline";
 
 const cssText = [
+  variablesCss,
   chatCss,
   chatBubbleCss,
   chatWindowCss,

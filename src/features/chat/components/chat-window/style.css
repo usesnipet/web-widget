@@ -4,38 +4,28 @@
   overflow: hidden;
   height: 480px;
   width: 340px;
-  border-radius: 16px;
-  border: 1px solid #e5e5e5;
-  background-color: #fff;
-  color: #171717;
+  border-radius: var(--snipet-radius-lg);
+  border: var(--snipet-border-width) solid var(--snipet-color-border);
+  background-color: var(--snipet-color-bg);
+  color: var(--snipet-color-text);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-.snipet-root.dark .snipet-window {
-  border-color: #404040;
-  background-color: #171717;
-  color: #f5f5f5;
 }
 
 .snipet-window__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px;
-  background-color: #171717;
-  color: #fff;
-  font-weight: 500;
-}
-
-.snipet-root.dark .snipet-window__header {
-  background-color: #0a0a0a;
+  padding: var(--snipet-space-header-y) var(--snipet-space-lg);
+  background-color: var(--snipet-color-header-bg);
+  color: var(--snipet-color-header-text);
+  font-weight: var(--snipet-font-weight-medium);
 }
 
 .snipet-window__close {
   cursor: pointer;
   border: none;
   background-color: transparent;
-  font-size: 1.25rem;
+  font-size: var(--snipet-font-size-lg);
   line-height: 1;
-  color: #fff;
+  color: var(--snipet-color-header-text);
 }

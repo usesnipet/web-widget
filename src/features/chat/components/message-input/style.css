@@ -1,22 +1,18 @@
 .snipet-input {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--snipet-space-sm);
   flex-shrink: 0;
-  padding: 12px;
-  border-top: 1px solid #e5e5e5;
-}
-
-.snipet-root.dark .snipet-input {
-  border-color: #404040;
+  padding: var(--snipet-space-md);
+  border-top: var(--snipet-border-width) solid var(--snipet-color-border);
 }
 
 .snipet-input__field {
   flex: 1;
   min-width: 0;
-  padding: 8px 12px;
-  border: 1px solid #e5e5e5;
-  border-radius: 9999px;
+  padding: var(--snipet-space-sm) var(--snipet-space-md);
+  border: var(--snipet-border-width) solid var(--snipet-color-border);
+  border-radius: var(--snipet-radius-full);
   background-color: transparent;
   color: inherit;
   font: inherit;
@@ -24,11 +20,7 @@
 }
 
 .snipet-input__field:focus {
-  border-color: #2563eb;
-}
-
-.snipet-root.dark .snipet-input__field {
-  border-color: #404040;
+  border-color: var(--snipet-color-primary);
 }
 
 .snipet-input__send {
@@ -39,17 +31,13 @@
   height: 36px;
   flex-shrink: 0;
   border: none;
-  border-radius: 9999px;
-  background-color: #2563eb;
-  color: #fff;
+  border-radius: var(--snipet-radius-full);
+  background-color: var(--snipet-color-primary);
+  color: var(--snipet-color-on-primary);
   cursor: pointer;
 }
 
 .snipet-input__send:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-.snipet-root.dark .snipet-input__send {
-  background-color: #3b82f6;
 }

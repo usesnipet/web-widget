@@ -4,6 +4,6 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 16px;
+  gap: var(--snipet-gap-messages);
+  padding: var(--snipet-space-lg);
 }

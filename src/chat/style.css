@@ -1,6 +1,6 @@
 :host,
 .snipet-root {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--snipet-font-family);
 }
 
 .snipet-root {
@@ -9,9 +9,9 @@
   z-index: 2147483000;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  font-size: 14px;
-  line-height: 1.5;
+  gap: var(--snipet-space-md);
+  font-size: var(--snipet-font-size-base);
+  line-height: var(--snipet-line-height-base);
 }
 
 .snipet-root.snipet-position-right {

@@ -6,16 +6,12 @@
   width: 56px;
   cursor: pointer;
   border: none;
-  border-radius: 9999px;
-  background-color: #2563eb;
-  color: #fff;
+  border-radius: var(--snipet-radius-full);
+  background-color: var(--snipet-color-primary);
+  color: var(--snipet-color-on-primary);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
 }
 
 .snipet-bubble:hover {
   filter: brightness(1.1);
-}
-
-.snipet-root.dark .snipet-bubble {
-  background-color: #3b82f6;
 }
