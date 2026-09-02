@@ -133,3 +133,115 @@
 .snipet-session-select__add:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
+
+.snipet-chat {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.snipet-messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+}
+
+.snipet-message {
+  display: flex;
+  max-width: 80%;
+}
+
+.snipet-message--user {
+  align-self: flex-end;
+}
+
+.snipet-message--assistant,
+.snipet-message--system,
+.snipet-message--tool {
+  align-self: flex-start;
+}
+
+.snipet-message__bubble {
+  padding: 8px 12px;
+  border-radius: 12px;
+  background-color: #f5f5f5;
+  color: #171717;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.snipet-message--user .snipet-message__bubble {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+.snipet-root.dark .snipet-message__bubble {
+  background-color: #262626;
+  color: #f5f5f5;
+}
+
+.snipet-root.dark .snipet-message--user .snipet-message__bubble {
+  background-color: #3b82f6;
+  color: #fff;
+}
+
+.snipet-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 12px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.snipet-root.dark .snipet-input {
+  border-color: #404040;
+}
+
+.snipet-input__field {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 9999px;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  outline: none;
+}
+
+.snipet-input__field:focus {
+  border-color: #2563eb;
+}
+
+.snipet-root.dark .snipet-input__field {
+  border-color: #404040;
+}
+
+.snipet-input__send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 9999px;
+  background-color: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+.snipet-input__send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.snipet-root.dark .snipet-input__send {
+  background-color: #3b82f6;
+}

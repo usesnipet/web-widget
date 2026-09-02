@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { ChatBubble } from "./components/chat-bubble";
-import { ChatWindow } from "./components/chat-window";
+import { ChatBubble } from "./features/chat/components/chat-bubble";
+import { ChatWindow } from "./features/chat/components/chat-window";
 
 import { useTheme } from "./hooks/use-theme";
 import { useFindPublicApp } from "./features/app/hooks";

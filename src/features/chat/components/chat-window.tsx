@@ -1,5 +1,6 @@
 import { SessionSelect } from '@/features/session/components/session-select';
-import type { Config } from '../config'
+import type { Config } from '../../../config'
+import { ChatContainer } from './chat-container'
 
 type Props = {
   config: Config
@@ -18,10 +19,8 @@ export function ChatWindow({ onClose }: Props) {
           ×
         </button>
       </header>
-{/*
-      <MessageList messages={messages} />
 
-      <MessageInput onSend={handleSend} disabled={!session || sending} /> */}
+      <ChatContainer messages={[]} onSend={() => {}} />
     </div>
   )
 }
