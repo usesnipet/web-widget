@@ -1,7 +1,7 @@
 import type { Message as ChatMessage } from "@/models/session";
 
-import { MessageInput } from "./message-input";
-import { MessageList } from "./message-list";
+import { MessageInput } from "../message-input";
+import { MessageList } from "../message-list";
 
 type Props = {
   messages: ChatMessage[];

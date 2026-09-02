@@ -1,6 +1,6 @@
 import type { Session } from "@/models/session";
 
-import { useSessions } from "../hooks";
+import { useSessions } from "../../hooks";
 
 const sessionLabel = (session: Session, index: number) =>
   session.metadata?.name?.trim() || `Sessão ${index + 1}`;

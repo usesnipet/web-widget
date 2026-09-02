@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { ChatBubble } from "./features/chat/components/chat-bubble";
-import { ChatWindow } from "./features/chat/components/chat-window";
+import { ChatBubble } from "../features/chat/components/chat-bubble";
+import { ChatWindow } from "../features/chat/components/chat-window";
 
-import { useTheme } from "./hooks/use-theme";
-import { useFindPublicApp } from "./features/app/hooks";
-import { useAuthFlow } from "./features/auth/hooks";
-import { useConfig } from "./context/config";
+import { useTheme } from "../hooks/use-theme";
+import { useFindPublicApp } from "../features/app/hooks";
+import { useAuthFlow } from "../features/auth/hooks";
+import { useConfig } from "../context/config";
 
 export const Chat = () => {
   const [open, setOpen] = useState(false);

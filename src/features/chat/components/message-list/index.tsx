@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 import type { Message as ChatMessage } from "@/models/session";
 
-import { Message } from "./message";
+import { Message } from "../message";
 
 type Props = {
   messages: ChatMessage[];

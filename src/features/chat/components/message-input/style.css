@@ -1,0 +1,55 @@
+.snipet-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 12px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.snipet-root.dark .snipet-input {
+  border-color: #404040;
+}
+
+.snipet-input__field {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 9999px;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  outline: none;
+}
+
+.snipet-input__field:focus {
+  border-color: #2563eb;
+}
+
+.snipet-root.dark .snipet-input__field {
+  border-color: #404040;
+}
+
+.snipet-input__send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 9999px;
+  background-color: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+.snipet-input__send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.snipet-root.dark .snipet-input__send {
+  background-color: #3b82f6;
+}

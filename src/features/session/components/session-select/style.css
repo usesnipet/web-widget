@@ -1,0 +1,45 @@
+.snipet-session-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.snipet-session-select__empty {
+  font-weight: 500;
+}
+
+.snipet-session-select__control {
+  max-width: 180px;
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background-color: transparent;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.snipet-session-select__control option {
+  color: #171717;
+}
+
+.snipet-session-select__add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background-color: transparent;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.snipet-session-select__add:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

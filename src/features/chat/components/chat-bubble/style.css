@@ -1,0 +1,21 @@
+.snipet-bubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  width: 56px;
+  cursor: pointer;
+  border: none;
+  border-radius: 9999px;
+  background-color: #2563eb;
+  color: #fff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.snipet-bubble:hover {
+  filter: brightness(1.1);
+}
+
+.snipet-root.dark .snipet-bubble {
+  background-color: #3b82f6;
+}

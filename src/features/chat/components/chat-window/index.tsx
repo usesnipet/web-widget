@@ -1,6 +1,6 @@
 import { SessionSelect } from '@/features/session/components/session-select';
-import type { Config } from '../../../config'
-import { ChatContainer } from './chat-container'
+import type { Config } from '../../../../config'
+import { ChatContainer } from '../chat-container'
 
 type Props = {
   config: Config
