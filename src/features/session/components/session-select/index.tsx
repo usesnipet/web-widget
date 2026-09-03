@@ -1,5 +1,6 @@
-import { useActiveSession } from "@/context/session";
 import type { Session } from "@/models/session";
+import { useSessions } from "../../hooks";
+import { useSessionStore } from "../../store";
 
 const sessionLabel = (session: Session, index: number) =>
   session.metadata?.name?.trim() || `Sessão ${index + 1}`;
@@ -10,8 +11,11 @@ const sessionLabel = (session: Session, index: number) =>
  * - one or more     → a `<select>` plus a `+` button to start a new one.
  */
 export function SessionSelect() {
-  const { sessions, activeSessionId, setActiveSessionId, isLoading } = useActiveSession();
+  const { data: sessionsPage, isLoading } = useSessions();
+  const selectedSession = useSessionStore((state) => state.selectedSession);
+  const setActiveSession = useSessionStore((state) => state.setSelectedSession);
 
+  const sessions = sessionsPage?.data ?? [];
   if (isLoading) return null;
 
   if (sessions.length === 0) {
@@ -22,8 +26,8 @@ export function SessionSelect() {
     <div className="snipet-session-select">
       <select
         className="snipet-session-select__control"
-        value={activeSessionId ?? sessions[0].id}
-        onChange={(event) => setActiveSessionId(event.target.value)}
+        value={selectedSession?.id}
+        onChange={(event) => setActiveSession(event.target.value)}
         aria-label="Selecionar sessão"
       >
         {sessions.map((session, index) => (

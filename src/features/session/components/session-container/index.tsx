@@ -1,15 +1,7 @@
-import { useActiveSession } from "@/context/session";
-import type { Message } from "@/models/session";
-
 import { SessionEmptyState } from "../session-empty-state";
 import { MessageInput } from "../message-input";
 import { MessageList } from "../message-list";
-
-type Props = {
-  messages: Message[];
-  onSend: (text: string) => void;
-  disabled?: boolean;
-};
+import { useSessionStore } from "../../store";
 
 /**
  * Session body: a scrollable message area with the input docked at the bottom.
@@ -17,11 +9,12 @@ type Props = {
  * prompting the user to ask something.
  */
 export function SessionContainer() {
-  const { activeSessionId, isLoading } = useActiveSession();
+  const initialized = useSessionStore(s => s.initialized);
+  const selectedSession = useSessionStore(s => s.selectedSession);
 
   return (
     <div className="snipet-session">
-      {isLoading ? null : activeSessionId ? (
+      {!initialized ? null : selectedSession ? (
         <MessageList />
       ) : (
         <SessionEmptyState />

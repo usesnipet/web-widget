@@ -7,7 +7,6 @@ import { useTheme } from "../hooks/use-theme";
 import { useFindPublicApp } from "../features/app/hooks";
 import { useAuthFlow } from "../features/auth/hooks";
 import { useConfig } from "../context/config";
-import { SessionProvider } from "../context/session";
 
 export const Session = () => {
   const [open, setOpen] = useState(false);
@@ -35,10 +34,8 @@ export const Session = () => {
 
   return (
     <div className={`snipet-root ${theme === "dark" ? "dark" : ""} ${positionClass}`}>
-      <SessionProvider>
-        {open && <SessionWindow config={config} onClose={closeSession} />}
-        <SessionBubble open={open} onToggle={toggleSession} />
-      </SessionProvider>
+      {open && <SessionWindow config={config} onClose={closeSession} />}
+      <SessionBubble open={open} onToggle={toggleSession} />
     </div>
   )
 }

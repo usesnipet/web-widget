@@ -25,6 +25,7 @@ import type {
   SessionsPage,
   UpdateSessionInput,
 } from "./schemas";
+import { useSessionStore } from "./store";
 
 const BASE_QUERY_KEY = "session";
 
@@ -46,10 +47,15 @@ export const useSessions = (
   opts: ServiceGetOptions<SessionsPage, ListSessionsParams> = {},
 ): UseQueryResult<SessionsPage, Error> => {
   const { appCode } = useConfig();
+  const setSessions = useSessionStore((state) => state.setSessions);
 
   return useQuery({
     queryKey: sessionsQueryKey(appCode, params),
-    queryFn: () => sessionService.list(appCode, params, opts),
+    queryFn: async () => {
+      const result = await sessionService.list(appCode, params, opts);
+      setSessions(result.data);
+      return result;
+    },
     enabled: !!appCode,
   });
 };
