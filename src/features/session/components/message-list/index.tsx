@@ -8,12 +8,25 @@ import { useSessionStore } from "../../store";
 export function MessageList() {
   const endRef = useRef<HTMLDivElement>(null);
   const selectedSession = useSessionStore(s => s.selectedSession);
+  const liveMessages = useSessionStore(s => s.liveMessages);
+  const pendingUserMessage = useSessionStore(s => s.pendingUserMessage);
+  const streamingMessage = useSessionStore(s => s.streamingMessage);
   const { data: messagesPage, isLoading } = useSessionMessages(selectedSession?.id ?? "", { sort: "desc", skip: 0, take: 100 });
-  const messages = messagesPage?.data ?? [];
+
+  const persisted = messagesPage?.data ?? [];
+  const persistedIds = new Set(persisted.map((message) => message.id));
+  const liveNotPersisted = liveMessages.filter((message) => !persistedIds.has(message.id));
+
+  const messages = [
+    ...[...persisted].reverse(),
+    ...liveNotPersisted,
+    ...(pendingUserMessage ? [pendingUserMessage] : []),
+    ...(streamingMessage ? [streamingMessage] : []),
+  ];
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages.length, streamingMessage?.content]);
 
   return (
     <div className="snipet-messages">

@@ -1,4 +1,4 @@
-import http from "@/lib/http";
+import http, { httpSse, type SseEventHandler } from "@/lib/http";
 import type {
   ServiceDeleteOptions,
   ServiceGetOptions,
@@ -11,6 +11,7 @@ import {
   getSessionParamsSchema,
   listSessionMessagesParamsSchema,
   listSessionsParamsSchema,
+  runSessionSchema,
   sessionMessagesPageSchema,
   sessionResponseSchema,
   sessionsPageSchema,
@@ -21,6 +22,7 @@ import type {
   GetSessionParams,
   ListSessionMessagesParams,
   ListSessionsParams,
+  RunSessionInput,
   SessionMessagesPage,
   SessionResponse,
   SessionsPage,
@@ -128,7 +130,24 @@ const listMessages = async (
   });
 };
 
-// `POST /apps/{code}/session/{id}/run` streams via SSE — intentionally not implemented yet.
+/** `POST /apps/{code}/session/{id}/run` — starts an execution and streams its events via SSE. */
+const run = (
+  code: string,
+  id: string,
+  body: RunSessionInput,
+  onEvent: SseEventHandler,
+  signal?: AbortSignal,
+): Promise<void> => {
+  return httpSse<RunSessionInput>({
+    url: `${sessionUrl(code)}/${id}/run`,
+    body,
+    schemas: {
+      body: runSessionSchema,
+    },
+    onEvent,
+    signal,
+  });
+};
 
 export const sessionService = {
   list,
@@ -137,4 +156,5 @@ export const sessionService = {
   update,
   remove,
   listMessages,
+  run,
 };

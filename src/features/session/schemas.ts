@@ -56,6 +56,15 @@ export const listSessionMessagesParamsSchema = paginationParamsSchema
 
 export type ListSessionMessagesParams = z.infer<typeof listSessionMessagesParamsSchema>;
 
+/** Body for `POST /apps/{code}/session/{id}/run` — the message that starts the execution. */
+export const runSessionSchema = z
+  .object({
+    content: z.string().min(1),
+  })
+  .strict();
+
+export type RunSessionInput = z.infer<typeof runSessionSchema>;
+
 /** Response of `GET`/`POST` for a single session — the full session model. */
 export const sessionResponseSchema = sessionSchema;
 export type SessionResponse = Session;

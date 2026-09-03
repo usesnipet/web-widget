@@ -1,14 +1,18 @@
 import { useState } from "react";
 
+import { useSendMessage } from "@/features/session/hooks";
+
 export function MessageInput() {
   const [value, setValue] = useState("");
-  const disabled = value.trim() === "";
+  const { sendMessage, isSending } = useSendMessage();
+  const disabled = value.trim() === "" || isSending;
 
   const submit = (event: React.SyntheticEvent) => {
     event.preventDefault();
     const text = value.trim();
-    if (!text || disabled) return;
+    if (!text || isSending) return;
     setValue("");
+    void sendMessage(text);
   };
 
   return (
@@ -19,11 +23,12 @@ export function MessageInput() {
         placeholder="Digite uma mensagem..."
         value={value}
         onChange={(event) => setValue(event.target.value)}
+        disabled={isSending}
       />
       <button
         type="submit"
         className="snipet-input__send"
-        disabled={disabled || !value.trim()}
+        disabled={disabled}
         aria-label="Enviar mensagem"
       >
         <svg

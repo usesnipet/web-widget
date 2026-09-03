@@ -7,6 +7,9 @@ import {
 } from "@tanstack/react-query";
 
 import { useConfig } from "@/context/config";
+import { getDefaultAgentId } from "@/features/app/schema";
+import { useFindPublicApp } from "@/features/app/hooks";
+import { logger } from "@/lib/logger";
 import type {
   ServiceDeleteOptions,
   ServiceGetOptions,
@@ -25,6 +28,13 @@ import type {
   SessionsPage,
   UpdateSessionInput,
 } from "./schemas";
+import { SSE_EVENT } from "./sse-events";
+import type {
+  ExecutionFailedEventData,
+  MessageAddedEventData,
+  MessageAttemptFailedEventData,
+  MessageDeltaEventData,
+} from "./sse-events";
 import { useSessionStore } from "./store";
 
 const BASE_QUERY_KEY = "session";
@@ -136,4 +146,87 @@ export const useDeleteSession = (
       queryClient.removeQueries({ queryKey: [BASE_QUERY_KEY, "detail", appCode, id] });
     },
   });
+};
+
+/**
+ * Sends a message in the selected session, creating one first if none is active.
+ * The reply streams in via `message.delta` and is confirmed by `message.added`.
+ */
+export const useSendMessage = (): { sendMessage: (content: string) => Promise<void>; isSending: boolean } => {
+  const { appCode } = useConfig();
+  const queryClient = useQueryClient();
+  const { data: publicApp } = useFindPublicApp();
+  const createSession = useCreateSession();
+
+  const selectedSession = useSessionStore((state) => state.selectedSession);
+  const selectSession = useSessionStore((state) => state.selectSession);
+  const isSending = useSessionStore((state) => state.isSending);
+  const setIsSending = useSessionStore((state) => state.setIsSending);
+  const setPendingUserMessage = useSessionStore((state) => state.setPendingUserMessage);
+  const addLiveMessage = useSessionStore((state) => state.addLiveMessage);
+  const appendStreamingDelta = useSessionStore((state) => state.appendStreamingDelta);
+  const clearStreamingMessage = useSessionStore((state) => state.clearStreamingMessage);
+
+  const sendMessage = async (content: string) => {
+    const text = content.trim();
+    if (!text || isSending) return;
+
+    setIsSending(true);
+    setPendingUserMessage({
+      id: `pending-${crypto.randomUUID()}`,
+      sequence: 0,
+      role: "user",
+      content: text,
+      final: true,
+      timestamp: new Date(),
+    });
+
+    try {
+      let session = selectedSession;
+      if (!session) {
+        const agentId = getDefaultAgentId(publicApp);
+        if (!agentId) throw new Error("No agent available to start a session");
+        session = await createSession.mutateAsync({ agent_id: agentId });
+        selectSession(session);
+      }
+
+      await sessionService.run(appCode, session.id, { content: text }, (event, data) => {
+        switch (event) {
+          case SSE_EVENT.messageAdded:
+            addLiveMessage((data as MessageAddedEventData).message);
+            break;
+          case SSE_EVENT.messageDelta: {
+            const delta = data as MessageDeltaEventData;
+            appendStreamingDelta(delta.message_id, delta.content);
+            break;
+          }
+          case SSE_EVENT.messageAttemptFailed: {
+            const failure = data as MessageAttemptFailedEventData;
+            clearStreamingMessage(failure.message_id);
+            logger.error(failure.error);
+            break;
+          }
+          case SSE_EVENT.executionFailed:
+            logger.error((data as ExecutionFailedEventData).error);
+            break;
+          case SSE_EVENT.executionFinished:
+          case SSE_EVENT.executionCancelled:
+          case SSE_EVENT.executionMaxTurnsReached:
+            queryClient.invalidateQueries({ queryKey: sessionMessagesQueryKey(appCode, session!.id) });
+            queryClient.invalidateQueries({ queryKey: sessionsQueryKey(appCode) });
+            break;
+          default:
+            break;
+        }
+      });
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setIsSending(false);
+      setPendingUserMessage(null);
+      clearStreamingMessage();
+    }
+  };
+
+  return { sendMessage, isSending };
 };
